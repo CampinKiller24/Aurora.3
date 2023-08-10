@@ -19,6 +19,10 @@
 	if(!.)
 		return
 
+	//Prevents restrained mobs from using the power
+	if(user.restrained())
+		return
+		
 	user.visible_message(SPAN_DANGER("<font size=4>[user] opens their arms and releases an ion blast around them!</font>"),
 						SPAN_DANGER("<font size=4>You open your arms and release an ion blast around you!</font>"))
 	empulse(get_turf(user), 3, 3)
