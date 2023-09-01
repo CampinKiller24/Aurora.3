@@ -241,36 +241,23 @@
 	if(T)
 		var/datum/gas_mixture/environment = T.return_air()
 		var/pressure = (environment)? environment.return_pressure() : 0
-		//If pressure is greater than about 40 kPA
-		if(pressure > ONE_ATMOSPHERE*0.4)
-			if(ispath(installed_barrel.projectile_type, /obj/item/projectile/kinetic))
-				var/obj/item/projectile/kinetic/shot_projectile = new installed_barrel.projectile_type(get_turf(src))
-				shot_projectile.damage = damage_increase
-				shot_projectile.range = range_increase
-				shot_projectile.aoe = max(1, aoe_increase)
+		if(istype(installed_barrel.projectile_type, /obj/item/projectile/kinetic))
+			var/obj/item/projectile/kinetic/shot_projectile = new installed_barrel.projectile_type(get_turf(src))
+			shot_projectile.damage = damage_increase
+			shot_projectile.range = range_increase
+			shot_projectile.aoe = max(1, aoe_increase)
+			//If pressure is greater than about 40 kPA, reduce the damage
+			if(pressure > ONE_ATMOSPHERE*0.4)
 				shot_projectile.base_damage = 5
 				return shot_projectile
-				
-			if(ispath(installed_barrel.projectile_type, /obj/item/projectile/beam))
-				var/obj/item/projectile/beam/shot_projectile = new installed_barrel.projectile_type(get_turf(src))
-				shot_projectile.damage = damage_increase
-				shot_projectile.range = range_increase
-				return shot_projectile
-
-		if(pressure < ONE_ATMOSPHERE*0.4)
-			if(ispath(installed_barrel.projectile_type, /obj/item/projectile/kinetic))
-				var/obj/item/projectile/kinetic/shot_projectile = new installed_barrel.projectile_type(get_turf(src))
-				shot_projectile.damage = damage_increase
-				shot_projectile.range = range_increase
-				shot_projectile.aoe = max(1, aoe_increase)
+			else
 				shot_projectile.base_damage = damage_increase
-				return shot_projectile
-				
-			if(ispath(installed_barrel.projectile_type, /obj/item/projectile/beam))
-				var/obj/item/projectile/beam/shot_projectile = new installed_barrel.projectile_type(get_turf(src))
-				shot_projectile.damage = damage_increase
-				shot_projectile.range = range_increase
-				return shot_projectile
+				return shot_projectile				
+		if(istype(installed_barrel.projectile_type, /obj/item/projectile/beam))
+			var/obj/item/projectile/beam/shot_projectile = new installed_barrel.projectile_type(get_turf(src))
+			shot_projectile.damage = damage_increase
+			shot_projectile.range = range_increase
+			return shot_projectile
 
 /obj/item/gun/custom_ka/Initialize()
 	. = ..()
