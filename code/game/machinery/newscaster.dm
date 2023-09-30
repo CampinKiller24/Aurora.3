@@ -39,20 +39,17 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	/**
 	 * What the screen is displaying
 	 *
-	 * 0 = welcome screen - main menu
-	 * 1 = view feed channels
-	 * 2 = create feed channel
-	 * 3 = create feed story
-	 * 4 = feed story submited sucessfully
-	 * 5 = feed channel created successfully
-	 * 6 = ERROR: Cannot create feed story
-	 * 7 = ERROR: Cannot create feed channel
-	 * 8 = print newspaper
-	 * 9 = viewing channel feeds
-	 * 10 = censor feed story
-	 * 11 = censor feed channel
+	 * main = main menu
+	 * viewchannels = view feed channels
+	 * createchannel = create feed channel
+	 * submitstory = create feed story
+	 * viewstories = viewing channel feeds
+	 * censor = censor feed story
+	 * dnotice = censor feed channel
+	 * viewwantedissue = view wanted issue
+	 * createwantedissue = create wanted issue
 	 */
-	var/screen = 0
+	var/screen = main
 
 	var/paper_remaining = 0
 
@@ -234,29 +231,93 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/list/data = list()
 	var/list/channels = list()
 
-	for(var/channel in SSnews.network_channels)
-		var/datum/fc = SSnews.GetFeedChannel(channel)
-		for(var/datum/feed_message/message in fc.messages)
-			channels += list(list(
-				"name" = fc.channel_name,
-				"owner" = fc.author,
-				"censored" = fc.censored,
-				"public" = fc.c_locked,
-				"messages" += message
-			))
-	
-	data["feed_channels"] = channels
+	//currently ID'd as ???
 
-	if(SSnews.wanted_issue)
+	if(screen == "main")
+		if(SSnews.wanted_issue)
+			data["active_issue"] = list(
+				"name" = SSnews.wanted_issue.author,
+				"description" = SSnews.wanted_issue.body,
+				"photo" = SSnews.wanted_issue.img
+		)
+
+	else if(screen == "viewchannels")
+		for(var/channel in SSnews.network_channels)
+			var/datum/fc = SSnews.GetFeedChannel(channel)
+			for(var/datum/feed_message/message in fc.messages)
+				channels += list(list(
+					"name" = fc.channel_name,
+					"owner" = fc.author,
+					"censored" = fc.censored,
+					"public" = fc.c_locked,
+					"messages" += message
+				))
+
+		data["feed_channels"] = channels
+	
+	else if(screen == "createchannel")
+		data["current_channel"] = list(
+			"name" = channel_name,
+			"owner" = user,
+			"censored" = FALSE,
+			"public" = c_locked,
+			"messages" = null
+		)
+	else if(screen == "submitstory")
+
+	else if(screen == "viewstories")
+		var/channel = viewing_channel //idk if this'll work
+
+	else if(screen == "censor")
+
+	else if(screen == "dnotice")
+		for(var/channel in SSnews.network_channels)
+			var/datum/fc = SSnews.GetFeedChannel(channel)
+			for(var/datum/feed_message/message in fc.messages)
+				channels += list(list(
+					"name" = fc.channel_name,
+					"owner" = fc.author,
+					"censored" = fc.censored,
+					"public" = fc.c_locked,
+					"messages" += message
+				))
+
+		data["feed_channels"] = channels
+	
+	else if(screen == "viewwantedissue")
 		data["active_issue"] = list(
-			"name" = SSnews.wanted_issue.author,
-			"description" = SSnews.wanted_issue.body,
-			"photo" = SSnews.wanted_issue.img,
+				"name" = SSnews.wanted_issue.author,
+				"description" = SSnews.wanted_issue.body,
+				"photo" = SSnews.wanted_issue.img
+		)
+	else if(screen == "createwantedissue")
+		data["active_issue"] = list(
+				"name" = SSnews.wanted_issue.author,
+				"description" = SSnews.wanted_issue.body,
+				"photo" = SSnews.wanted_issue.img
 		)
 
 	return data
 
 /obj/machinery/newscaster/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	
+	switch(action)
+		if("createchannel")
+
+		if("viewchannels")
+
+		if("submitstory")
+
+		if("printpaper")
+
+		if("exit")
+
+		if("rescanuser")
+
+	//different switch for the sec options
 
 /obj/machinery/newscaster/attackby(obj/item/I as obj, mob/user as mob)
 	if (src.isbroken)

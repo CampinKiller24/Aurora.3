@@ -6,7 +6,9 @@ import { NtosWindow } from '../layouts';
 export type NewsData = {
   feed_channels: NewsChannel[]
   current_channel: NewsChannel;
+  active_issue: WantedIssue;
 };
+//may need to add a screen var to newsdata
 
 type NewsChannel = {
   name: string;
@@ -145,6 +147,14 @@ export const CreateFeed = (props, context) => {
   );
 };
 
+export const CreateStory = (props, context) => {
+  const { act, data} = useBackend<NewsData>(context);
+
+  return(
+
+  );
+};
+
 export const ViewFeed = (props, context) => {
   const { act, data} = useBackend<NewsData>(context);
 
@@ -165,10 +175,10 @@ export const ViewFeed = (props, context) => {
             />
         </>
       }>
-        <LabeledList>
+        <Stack vertical>
           //data here
           //channels here
-        </LabeledList>
+        </Stack>
     </Section>
   );
 };
