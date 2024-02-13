@@ -40,6 +40,7 @@
 		SPAN_NOTICE("You have patched the damaged [affected.artery_name] in [target]'s [affected.name] with \the [tool]."))
 
 	affected.status &= ~ORGAN_ARTERY_CUT
+	affected.status &= ~ORGAN_TOURNIQUET
 	affected.update_damages()
 	if(ishuman(user) && prob(40))
 		user:bloody_hands(target, 0)

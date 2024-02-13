@@ -218,6 +218,8 @@
 				msg += "<span class='warning'>[get_pronoun("He")] [get_pronoun("has")] a splint on [get_pronoun("his")] [o.name]!</span>\n"
 			if(o.applied_pressure == src)
 				msg += "<span class='warning'>[get_pronoun("He")] [get_pronoun("is")] applying pressure to [get_pronoun("his")] [o.name]!</span>\n"
+			if(o.status & ORGAN_TOURNIQUET)
+				msg += "<span class='warning'>[get_pronoun("He")] [get_pronoun("has")] a tourniquet on [get_pronoun("his")] [o.name]!</span>\n"
 
 	if(HAS_FLAG(mutations, mSmallsize))
 		msg += "[get_pronoun("He")] [get_pronoun("is")] small halfling!\n"

@@ -150,6 +150,8 @@
 				if(bleed_amount)
 					if(CE_BLOODCLOT in owner.chem_effects)
 						bleed_amount *= 0.8 // won't do much, but it'll help
+					if(ORGAN_TOURNIQUET)
+						bleed_amount *= 0.5
 					if(open_wound)
 						blood_max += bleed_amount
 						do_spray += "[temp.name]"

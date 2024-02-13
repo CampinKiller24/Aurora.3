@@ -546,6 +546,8 @@
 			wounds += "[O.broken_description]"
 		if (O.open)
 			wounds += "open"
+		if (O.status & ORGAN_TOURNIQUET)
+			wounds += "tourniquet applied"
 
 		var/list/infection = list()
 		if (O.germ_level)

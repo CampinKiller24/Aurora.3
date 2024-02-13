@@ -910,6 +910,8 @@ var/global/list/golem_types = list(
 				tally += 4
 			else if(E.status & ORGAN_SPLINTED)
 				tally += 0.5
+			else if(E.status & ORGAN_TOURNIQUET)
+				tally += 0.5
 			else if(E.status & ORGAN_BROKEN)
 				tally += 1.5
 	else
@@ -918,7 +920,7 @@ var/global/list/golem_types = list(
 			tally += 8
 		else if((E.status & ORGAN_BROKEN) || (E.tendon_status() & TENDON_CUT))
 			tally += 4
-		else if((E.status & ORGAN_SPLINTED) || (E.tendon_status() & TENDON_BRUISED))
+		else if((E.status & ORGAN_SPLINTED) || (E.tendon_status() & TENDON_BRUISED) || (E.status & ORGAN_TOURNIQUET))
 			tally += 2
 	return tally
 

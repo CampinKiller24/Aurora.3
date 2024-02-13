@@ -427,3 +427,57 @@ Contains:
 	icon_state = "tape-splint"
 	amount = 1
 	splintable_organs = list(BP_L_ARM,BP_R_ARM,BP_L_LEG,BP_R_LEG)
+
+/obj/item/stack/medical/tourniquet
+	name = "tourniquets"
+	desc = "Bands that are designed to be tied tightly around a limb to slow or stop uncontrollable bleeding."
+	singular_name = "tourniquet"
+	icon_state = "splint" //until I make something
+	amount = 5
+	max_amount = 5
+	drop_sound = 'sound/items/drop/hat.ogg'
+	pickup_sound = 'sound/items/pickup/hat.ogg'
+	var/list/tourn_organs = list(BP_L_ARM,BP_R_ARM,BP_L_LEG,BP_R_LEG, BP_L_HAND, BP_R_HAND, BP_R_FOOT, BP_L_FOOT)
+
+/obj/item/stack/medical/tourniquet/full/Initialize()
+	. = ..()
+	amount = max_amount
+	update_icon
+
+/obj/item/stack/medical/tourniquet/attack(mob/living/carbon/M as mob, mob/user as mob)
+	if(..())
+		return 1
+
+	if (!can_use(1, user))
+		return 0
+
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
+		var/limb = affecting.name
+		if(!(affecting.limb_name in tourn_organs))
+			to_chat(user, SPAN_DANGER("You can't apply a tourniquet there!"))
+			return
+		if(affecting.status & ORGAN_TOURNIQUET)
+			to_chat(user, SPAN_DANGER("[M]'s [limb] already has a tourniquet applied!"))
+			return
+		if(M != user)
+			user.visible_message(SPAN_DANGER("[user] starts to apply \the [src] to [M]'s [limb]."), SPAN_DANGER("You start to apply \the [src] to [M]'s [limb]."), SPAN_DANGER("You hear something being tied."))
+		else
+			if((!user.hand && affecting.limb_name == BP_R_ARM) || (user.hand && affecting.limb_name == BP_L_ARM))
+				to_chat(user, SPAN_DANGER("You can't apply a tourniquet to the arm you're using!"))
+				return
+			user.visible_message(SPAN_DANGER("[user] starts to apply \the [src] to their [limb]."), SPAN_DANGER("You start to apply \the [src] to your [limb]."), SPAN_DANGER("You hear something being tied."))
+
+		if(do_after(user, 5 SECONDS, M))
+			if (M != user)
+				user.visible_message(SPAN_DANGER("[user] finishes applying \the [src] to [M]'s [limb]."), SPAN_DANGER("You finish applying \the [src] to [M]'s [limb]."), SPAN_DANGER("You hear something being tied."))
+			else
+				if(prob(25))
+					user.visible_message(SPAN_DANGER("[user] successfully applies \the [src] to their [limb]."), SPAN_DANGER("You successfully apply \the [src] to your [limb]."), SPAN_DANGER("You hear something being tied."))
+				else
+					user.visible_message(SPAN_DANGER("[user] fumbles \the [src]."), SPAN_DANGER("You fumble \the [src]."), SPAN_DANGER("You hear something being tied."))
+					return
+			affecting.status |= ORGAN_TOURNIQUET
+			use(1)
+		return
