@@ -361,6 +361,7 @@
 	if(suit && LAZYLEN(suit.accessories))
 		dat += "<BR><A href='?src=\ref[src];item=tie'>Remove accessory</A>"
 	dat += "<BR><A href='?src=\ref[src];item=splints'>Remove splints</A>"
+	dat += "<BR><A href='?src=\ref[src];item=tourniquets'>Remove tourniquets</A>"
 	dat += "<BR><A href='?src=\ref[src];item=pockets'>Empty pockets</A>"
 	dat += species.get_strip_info("\ref[src]")
 	dat += "<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>"

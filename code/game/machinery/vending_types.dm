@@ -640,6 +640,7 @@
 		/obj/item/stack/medical/advanced/bruise_pack = 3,
 		/obj/item/stack/medical/advanced/ointment = 3,
 		/obj/item/stack/medical/splint = 2,
+		/obj/item/stack/medical/tourniquet = 2,
 		/obj/item/reagent_containers/pill/antitox = 6,
 		/obj/item/reagent_containers/pill/cetahydramine = 6,
 		/obj/item/reagent_containers/pill/perconol = 6,

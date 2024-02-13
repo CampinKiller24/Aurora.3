@@ -44,6 +44,11 @@
 			if(do_after(user, HUMAN_STRIP_DELAY, src, do_flags = DO_EQUIP))
 				remove_splints(user)
 			return 1
+		if("tourniquets")
+			visible_message("<span class='danger'>\The [user] is trying to remove \the [src]'s tourniquets!</span>")
+			if(do_after(user, HUMAN_STRIP_DELAY, src, do_flags = DO_EQUIP))
+				remove_tourniquets(user)
+			return 1
 		if("sensors")
 			visible_message("<span class='danger'>\The [user] is trying to set \the [src]'s sensors!</span>")
 			if(do_after(user, HUMAN_STRIP_DELAY, src, do_flags = DO_EQUIP))
@@ -161,6 +166,24 @@
 			visible_message("<span class='danger'>\The [user] removes \the [src]'s splints!</span>")
 		else
 			to_chat(user, "<span class='warning'>\The [src] has no splints to remove.</span>")
+
+//Remove all tourniquets
+/mob/living/carbon/human/proc/remove_tourniquets(var/mob/living/user)
+
+	var/can_reach = 1
+	if(can_reach)
+		var/removed_tourniquet
+		for(var/organ in list(BP_L_LEG,BP_R_LEG,BP_L_ARM,BP_R_ARM,BP_L_HAND,BP_R_HAND,BP_R_FOOT,BP_L_FOOT))
+			var/obj/item/organ/external/o = get_organ(organ)
+			if (o && o.status & ORGAN_TOURNIQUET)	
+				var/obj/item/W = new /obj/item/stack/medical/tourniquet(get_turf(src), 1)
+				o.status &= ~ORGAN_TOURNIQUET
+				W.add_fingerprint(user)
+				removed_tourniquet = 1
+		if(removed_tourniquet)
+			visible_message("<span class='danger'>\The [user] removes \the [src]'s tourniquets!</span>")
+		else
+			to_chat(user, "<span class='warning'>\The [src] has no tourniquets to remove.</span>")
 
 // Set internals on or off.
 /mob/living/carbon/human/proc/toggle_internals(var/mob/living/user)
