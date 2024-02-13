@@ -105,7 +105,7 @@
 		/obj/item/storage/firstaid/adv = 1,
 		/obj/item/device/healthanalyzer = 1,
 		/obj/item/reagent_containers/glass/bottle/thetamycin = 1,
-		/obj/item/reagent_containers/hypospray/autoinjector/coagzolug = 1
+		/obj/item/stack/medical/tourniquet = 1
 	)
 
 /datum/outfit/admin/ert/kataphract/specialist/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

@@ -211,13 +211,6 @@
 	. = ..()
 	desc += " This auto-injector is to be used in emergencies. It contains a small amount of inaprovaline and dexalin."
 
-/obj/item/reagent_containers/hypospray/autoinjector/coagzolug
-	name_label = "coagzolug"
-	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel. This one contains coagzolug, a quick-acting blood coagulant that will slow bleeding for as long as it's within the bloodstream."
-	volume = 5
-	atom_flags = 0
-	reagents_to_add = list(/singleton/reagent/coagzolug = 5)
-
 /obj/item/reagent_containers/hypospray/autoinjector/hyronalin
 	name_label = "hyronalin"
 	atom_flags = 0

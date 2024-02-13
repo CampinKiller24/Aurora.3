@@ -27,7 +27,7 @@
 	reagent_ids = list(/singleton/reagent/bicaridine, /singleton/reagent/kelotane, /singleton/reagent/dexalin, /singleton/reagent/inaprovaline, /singleton/reagent/dylovene, /singleton/reagent/perconol, /singleton/reagent/mortaphenyl, /singleton/reagent/thetamycin)
 
 /obj/item/reagent_containers/hypospray/borghypo/rescue
-	reagent_ids = list(/singleton/reagent/tricordrazine, /singleton/reagent/dexalin, /singleton/reagent/inaprovaline, /singleton/reagent/dylovene, /singleton/reagent/perconol, /singleton/reagent/mortaphenyl, /singleton/reagent/adrenaline, /singleton/reagent/coagzolug)
+	reagent_ids = list(/singleton/reagent/tricordrazine, /singleton/reagent/dexalin, /singleton/reagent/inaprovaline, /singleton/reagent/dylovene, /singleton/reagent/perconol, /singleton/reagent/mortaphenyl, /singleton/reagent/adrenaline)
 
 /obj/item/reagent_containers/hypospray/borghypo/Initialize()
 	. = ..()

@@ -99,5 +99,5 @@
 		/obj/item/storage/firstaid/adv = 2,
 		/obj/item/storage/firstaid/o2 = 1,
 		/obj/item/storage/box/syringes = 1,
-		/obj/item/reagent_containers/hypospray/autoinjector/coagzolug = 1
+		/obj/item/stack/medical/tourniquet = 1
 	)

@@ -271,7 +271,6 @@
 	w_class = ITEMSIZE_SMALL
 	storage_slots = 7
 	starts_with = list(
-		/obj/item/reagent_containers/hypospray/autoinjector/coagzolug = 1,
 		/obj/item/reagent_containers/hypospray/autoinjector/pain = 1,
 		/obj/item/reagent_containers/hypospray/autoinjector/pouch_auto/adrenaline = 1,
 		/obj/item/reagent_containers/hypospray/autoinjector/pouch_auto/inaprovaline = 2,

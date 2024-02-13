@@ -52,7 +52,7 @@
 		/obj/item/storage/firstaid/combat = 1,
 		/obj/item/storage/firstaid/adv = 1,
 		/obj/item/device/healthanalyzer = 1,
-		/obj/item/reagent_containers/hypospray/autoinjector/coagzolug = 1
+		/obj/item/stack/medical/tourniquet = 1
 	)
 
 	belt_contents = list(

@@ -1721,29 +1721,6 @@
 	if(prob(2))
 		to_chat(H, SPAN_WARNING(pick("Your muscles are stinging a bit.", "Your muscles ache.")))
 
-/singleton/reagent/coagzolug
-	name = "Coagzolug"
-	description = "A medicine that was stumbled upon by accident, coagzolug encourages blood to clot and slow down bleeding. An overdose causes dangerous blood clots capable of harming the heart."
-	reagent_state = LIQUID
-	scannable = TRUE
-	color = "#bd5eb5"
-	overdose = 10
-	metabolism = REM / 3.33
-	taste_description = "throat-clenching sourness"
-	fallback_specific_heat = 1
-
-/singleton/reagent/coagzolug/affect_blood(mob/living/carbon/M, alien, removed)
-	. = ..()
-	if(check_min_dose(M, 0.5))
-		M.add_chemical_effect(CE_BLOODCLOT)
-		M.make_dizzy(5)
-
-/singleton/reagent/coagzolug/overdose(var/mob/living/carbon/H, var/alien)
-	if(prob(2))
-		to_chat(H, SPAN_WARNING(pick("You feel a clot shoot through your heart!", "Your veins feel like they're being shredded!")))
-		var/obj/item/organ/internal/heart/heart = H.internal_organs_by_name[BP_HEART]
-		heart.take_internal_damage(1, TRUE)
-
 /singleton/reagent/mental/vkrexi
 	name = "V'krexi taffy"
 	description = "V'krexi meat, processed to become a chewy, sticky candy."

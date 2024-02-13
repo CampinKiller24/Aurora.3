@@ -553,13 +553,6 @@
 	required_reagents = list(/singleton/reagent/sodiumchloride = 1, /singleton/reagent/alcohol = 1, /singleton/reagent/radium = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/coagzolug
-	name = "Coagzolug"
-	id = "coagzolug"
-	result = /singleton/reagent/coagzolug
-	required_reagents = list(/singleton/reagent/tricordrazine = 1, /singleton/reagent/antidexafen = 1)
-	result_amount = 1 // result is 1. i imagine it's because of some whacky reaction
-
 /datum/chemical_reaction/surfactant
 	name = "Azosurfactant"
 	id = "surfactant"
@@ -1620,14 +1613,6 @@
 	result = /singleton/reagent/clonexadone
 	required_reagents = list(/singleton/reagent/cryoxadone = 5)
 	result_amount = 5
-	required = /obj/item/slime_extract/pyrite
-
-/datum/chemical_reaction/slime/pyrite/inap_to_coag
-	name = "Pyrite Transmutation: Inaprovaline to Coagzolug"
-	id = "inap_to_coag"
-	result = /singleton/reagent/coagzolug
-	required_reagents = list(/singleton/reagent/inaprovaline = 5)
-	result_amount = 10
 	required = /obj/item/slime_extract/pyrite
 
 /datum/chemical_reaction/slime/pyrite/kelo_to_derm
