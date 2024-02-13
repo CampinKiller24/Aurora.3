@@ -442,7 +442,7 @@ Contains:
 /obj/item/stack/medical/tourniquet/full/Initialize()
 	. = ..()
 	amount = max_amount
-	update_icon
+	update_icon()
 
 /obj/item/stack/medical/tourniquet/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(..())
