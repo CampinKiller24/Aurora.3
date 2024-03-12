@@ -432,12 +432,12 @@ Contains:
 	name = "tourniquets"
 	desc = "Bands that are designed to be tied tightly around a limb to slow or stop uncontrollable bleeding."
 	singular_name = "tourniquet"
-	icon_state = "splint" //until I make something
+	icon_state = "tourniquet"
 	amount = 5
 	max_amount = 5
 	drop_sound = 'sound/items/drop/hat.ogg'
 	pickup_sound = 'sound/items/pickup/hat.ogg'
-	var/list/tourn_organs = list(BP_L_ARM,BP_R_ARM,BP_L_LEG,BP_R_LEG, BP_L_HAND, BP_R_HAND, BP_R_FOOT, BP_L_FOOT)
+	var/list/tourn_organs = list(BP_L_ARM,BP_R_ARM,BP_L_LEG,BP_R_LEG, BP_L_HAND, BP_R_HAND, BP_R_FOOT, BP_L_FOOT, BP_HEAD)
 
 /obj/item/stack/medical/tourniquet/full/Initialize()
 	. = ..()
@@ -462,16 +462,27 @@ Contains:
 			to_chat(user, SPAN_DANGER("[M]'s [limb] already has a tourniquet applied!"))
 			return
 		if(M != user)
-			user.visible_message(SPAN_DANGER("[user] starts to apply \the [src] to [M]'s [limb]."), SPAN_DANGER("You start to apply \the [src] to [M]'s [limb]."), SPAN_DANGER("You hear something being tied."))
+			if(affecting.limb_name == BP_HEAD)
+				user.visible_message(SPAN_WARNING("[user] starts to tie \the [src] around [M]'s neck!"), SPAN_WARNING("You start to tie \the [src] around [M]'s neck!"), SPAN_WARNING("You hear something being tied."))
+			else
+				user.visible_message(SPAN_DANGER("[user] starts to apply \the [src] to [M]'s [limb]."), SPAN_DANGER("You start to apply \the [src] to [M]'s [limb]."), SPAN_DANGER("You hear something being tied."))
 		else
 			if((!user.hand && affecting.limb_name == BP_R_ARM) || (user.hand && affecting.limb_name == BP_L_ARM))
 				to_chat(user, SPAN_DANGER("You can't apply a tourniquet to the arm you're using!"))
+				return
+			if(affecting.limb_name == BP_HEAD)
+				to_chat(user, SPAN_DANGER("You can't tie a tourniquet around your own neck!"))
 				return
 			user.visible_message(SPAN_DANGER("[user] starts to apply \the [src] to their [limb]."), SPAN_DANGER("You start to apply \the [src] to your [limb]."), SPAN_DANGER("You hear something being tied."))
 
 		if(do_after(user, 5 SECONDS, M))
 			if (M != user)
-				user.visible_message(SPAN_DANGER("[user] finishes applying \the [src] to [M]'s [limb]."), SPAN_DANGER("You finish applying \the [src] to [M]'s [limb]."), SPAN_DANGER("You hear something being tied."))
+				if(affecting.limb_name == BP_HEAD)
+					user.visible_message(SPAN_WARNING("[user] finishes tying \the [src] around [M]'s neck!"), SPAN_DANGER("You finish tying \the [src] around [M]'s neck!"), SPAN_DANGER("You hear something being tied."))
+					M.apply_damage(20, DAMAGE_OXY)
+					M.losebreath += 10
+				else
+					user.visible_message(SPAN_DANGER("[user] finishes applying \the [src] to [M]'s [limb]."), SPAN_DANGER("You finish applying \the [src] to [M]'s [limb]."), SPAN_DANGER("You hear something being tied."))
 			else
 				if(prob(25))
 					user.visible_message(SPAN_DANGER("[user] successfully applies \the [src] to their [limb]."), SPAN_DANGER("You successfully apply \the [src] to your [limb]."), SPAN_DANGER("You hear something being tied."))

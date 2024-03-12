@@ -146,17 +146,26 @@
 							blood_max += ((W.damage / 40) * species.bleed_mod)
 
 			if(temp.status & ORGAN_ARTERY_CUT)
-				var/bleed_amount = FLOOR((owner.vessel.total_volume / (temp.applied_pressure || !open_wound ? 450 : 250)) * temp.arterial_bleed_severity)
+				var/bleed_amount = FLOOR((owner.vessel.total_volume / (temp.applied_pressure || !open_wound ? 350 : 250)) * temp.arterial_bleed_severity)
 				if(bleed_amount)
 					if(CE_BLOODCLOT in owner.chem_effects)
 						bleed_amount *= 0.8 // won't do much, but it'll help
-					if(temp.status & ORGAN_TOURNIQUET)
+					//if not open and tourniqueted
+					if(ORGAN_TOURNIQUET && !open_wound)
 						bleed_amount *= 0.25
-					if(open_wound)
+						owner.vessel.remove_reagent(/singleton/reagent/blood, bleed_amount)
+					//if not open and not tourniqueted
+					else if(!open_wound && !ORGAN_TOURNIQUET)
+						owner.vessel.remove_reagent(/singleton/reagent/blood, bleed_amount)
+					//if open and not tourniqueted
+					else if(open_wound && !ORGAN_TOURNIQUET)
 						blood_max += bleed_amount
 						do_spray += "[temp.name]"
-					else
-						owner.vessel.remove_reagent(/singleton/reagent/blood, bleed_amount)
+					//if open and tourniqueted
+					else if(open_wound && ORGAN_TOURNIQUET)
+						bleed_amount *= 0.25
+						blood_max += bleed_amount
+						do_spray += "[temp.name]"
 
 		switch(pulse)
 			if(PULSE_SLOW)
